@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" width="100" height="50">
+    <!-- Semi-circle using path element -->
+    <path d="M0 25 A50 50 0 0 1 100 25 Z" fill="#3366FF" />
+    <rect x="20" y="37.5" width="60" height="15" fill="#3366FF" />
+</svg>
