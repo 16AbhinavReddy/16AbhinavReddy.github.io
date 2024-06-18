@@ -1606,7 +1606,10 @@ textarea.form-input::-webkit-resizer { display: none; }
    * #background
    */
 
-  .timeline-list { margin-left: 65px; }
+  .timeline-list { 
+    margin-left: 65px; 
+    margin-top: 20px;
+  }
 
   .timeline-item:not(:last-child)::before { left: -40px; }
 
