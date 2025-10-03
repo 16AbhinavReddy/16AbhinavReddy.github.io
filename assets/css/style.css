@@ -848,21 +848,13 @@ main {
 .timeline-item1 { position: relative; }
 
 .timeline-item1:not(:last-child) { margin-bottom: 20px; }
+/* Match bullet item line-height to text for consistent centering */
+.timeline-item1 { line-height: 1.25; }
  
 .timeline-item1-title {
   font-size: var(--fs-6);
   line-height: 1.3;
   margin-bottom: 7px;
-}
-
-.timeline-item1:not(:last-child)::before {
-  /* content: "";
-  position: absolute;
-  top: -25px;
-  left: -30px;
-  width: 1px;
-  height: calc(100% + 50px);
-  background: var(--jet); */
 }
 
 .timeline-item1::after {
@@ -886,7 +878,64 @@ main {
   font-weight: var(--fw-300);
   line-height: 1.25;
   position: relative;
-  top: -5px; /* Adjust the value as needed */
+  top: 0; /* avoid vertical nudge to keep alignment centered */
+}
+
+/*
+ * Align logo with bullet dots, and title with bullet text in Experience
+ */
+
+.timeline-item-header {
+  display: flex;
+  align-items: center; /* vertically center logo and text */
+  gap: 15px;
+}
+
+.timeline-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center;
+  flex-shrink: 0;
+}
+
+.timeline-item-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center title/date alongside logo */
+}
+
+/* Bullet list nested inside each timeline item (Experience bullets) */
+.timeline-item > .timeline-list {
+  position: relative;
+  /* Align under the text block, not the logo */
+  margin-left: calc(60px + 15px); /* logo width + header gap */
+  margin-top: 10px;
+}
+
+/* Vertical connector line for Experience sub-bullets */
+.timeline-item > .timeline-list::before {
+  content: "";
+  position: absolute;
+  /* Start/end at bullet centers: (line-height - dot)/2 with line-height 1.25 and dot 6px */
+  top: calc((1.25em - 6px) / 2);
+  bottom: calc((1.25em - 6px) / 2);
+  left: -45px; /* pass through bullet centers: bullet left (-48) + half dot (3) */
+  width: 1px;
+  background: var(--jet);
+}
+
+/* Fine-tune bullet dot position to align exactly with the logo edge */
+.timeline-item > .timeline-list .timeline-item1::after {
+  /* Align dot center to logo center: -(gap + logo/2) - (dot/2) => -(15 + 30) - 3 = -48px */
+  top: calc((1.25em - 6px) / 2); /* center dot relative to 1.25 line-height and 6px dot */
+  left: -48px;
+  box-shadow: 0 0 0 3px var(--jet);
+}
+
+.timeline-item > .timeline-list .timeline-item1 {
+  padding-left: 0; /* keep bullet text aligned with the title block */
 }
 
 /**
@@ -1449,6 +1498,9 @@ textarea.form-input::-webkit-resizer { display: none; }
     display: block;
     width: 100%;
     height: auto;
+    object-fit: cover;
+    object-position: center top;
+    aspect-ratio: 1;
   }
 
   .info-content .name { margin-bottom: 15px; }
@@ -1545,7 +1597,13 @@ textarea.form-input::-webkit-resizer { display: none; }
     border-radius: 20px;
   }
 
-  .testimonials-avatar-box img { width: 80px; }
+  .testimonials-avatar-box img { 
+    width: 80px; 
+    height: 80px;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 10px;
+  }
 
   .testimonials-item-title {
     margin-bottom: 10px;
@@ -1956,7 +2014,12 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar-info { flex-direction: column; }
 
-  .avatar-box img { width: 150px; }
+  .avatar-box img { 
+    width: 150px; 
+    height: 150px;
+    object-fit: cover;
+    object-position: center top;
+  }
 
   .info-content .name {
     white-space: nowrap;
@@ -1991,6 +2054,58 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .social-list { justify-content: center; }
+
+  /**
+   * Waving animation
+   */
+  .wave {
+    display: inline-block;
+    animation: wave 2s ease-in-out infinite;
+    transform-origin: 70% 70%;
+  }
+
+  @keyframes wave {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  /**
+   * Timeline logos
+   */
+  .timeline-item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .timeline-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: var(--bg-gradient-onyx);
+    padding: 4px;
+  }
+
+  .timeline-item-content {
+    flex: 1;
+  }
+
+  .timeline-item-content .timeline-item-title {
+    margin-bottom: 8px;
+  }
+
+  .timeline-item-content span {
+    display: block;
+    margin-bottom: 10px;
+  }
 
 
 
