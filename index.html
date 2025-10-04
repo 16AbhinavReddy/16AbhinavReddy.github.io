@@ -4,6 +4,12 @@
 <head>
   <!--title-->
   <title>Abhinav Reddy! | Portfolio</title>
+  
+  <!--
+    - viewport for mobile responsiveness
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <!--
     - favicon
   -->
@@ -1163,10 +1169,12 @@
 
   <br>
 
-  <button class="form-btn1" type="submit" onclick="downloadResume()"  data-form-btn>
-    <ion-icon name="download"></ion-icon>
-    <span>Download CV</span>
-  </button>
+  <div class="download-cv-container">
+    <button class="form-btn1" type="submit" onclick="downloadResume()"  data-form-btn style="color: #000000 !important;">
+      <ion-icon name="download" style="color: #000000 !important; fill: #000000 !important;"></ion-icon>
+      <span style="color: #000000 !important;">Download CV</span>
+    </button>
+  </div>
 
   <script>
     function downloadResume() {
@@ -2012,9 +2020,9 @@
   
       <textarea id="message" class="form-input" placeholder="Your Message" required></textarea>
   
-      <button class="form-btn" type="submit" data-form-btn>
-        <ion-icon name="paper-plane"></ion-icon>
-        <span>Send Message</span>
+      <button class="form-btn" type="submit" data-form-btn style="color: #000000 !important;">
+        <ion-icon name="paper-plane" style="color: #000000 !important; fill: #000000 !important;"></ion-icon>
+        <span style="color: #000000 !important;">Send Message</span>
       </button>
   
     </form>

@@ -79,12 +79,13 @@ for (let i = 0; i < selectItems.length; i++) {
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
 const filterFunc = function (selectedValue) {
-
+  
   for (let i = 0; i < filterItems.length; i++) {
+    const category = filterItems[i].dataset.category;
 
     if (selectedValue === "all") {
       filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
+    } else if (selectedValue.toLowerCase() === category) {
       filterItems[i].classList.add("active");
     } else {
       filterItems[i].classList.remove("active");
@@ -140,20 +141,77 @@ for (let i = 0; i < formInputs.length; i++) {
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
+// Ensure About page is active by default on mobile
+if (window.innerWidth <= 767) {
+  // Remove active from all pages
+  pages.forEach(page => page.classList.remove("active"));
+  navigationLinks.forEach(link => link.classList.remove("active"));
+  
+  // Set About as active
+  const aboutPage = document.querySelector("[data-page='about']");
+  const aboutLink = document.querySelector("[data-nav-link]");
+  if (aboutPage) aboutPage.classList.add("active");
+  if (aboutLink) aboutLink.classList.add("active");
+}
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
+// add event to all nav link (disabled on mobile)
+if (window.innerWidth > 767) {
+  for (let i = 0; i < navigationLinks.length; i++) {
+    navigationLinks[i].addEventListener("click", function () {
+
+      // Remove active class from all pages and nav links
+      for (let j = 0; j < pages.length; j++) {
+        pages[j].classList.remove("active");
       }
-    }
+      for (let k = 0; k < navigationLinks.length; k++) {
+        navigationLinks[k].classList.remove("active");
+      }
 
-  });
+      // Add active class to clicked nav link
+      this.classList.add("active");
+
+      // Find and activate the corresponding page
+      const pageName = this.innerHTML.toLowerCase().trim();
+      for (let j = 0; j < pages.length; j++) {
+        if (pages[j].dataset.page === pageName) {
+          pages[j].classList.add("active");
+          break;
+        }
+      }
+
+      // Scroll to top
+      window.scrollTo(0, 0);
+
+    });
+  }
+}
+
+// Mobile-specific portfolio filtering fix
+if (window.innerWidth <= 767) {
+  // Initialize with "All" projects visible
+  filterFunc("all");
+  
+  // Re-initialize filtering for mobile
+  const mobileFilterBtn = document.querySelectorAll("[data-filter-btn]");
+  const mobileSelectValue = document.querySelector("[data-selecct-value]");
+  
+  // Set "All" as active by default
+  if (mobileFilterBtn[0]) {
+    mobileFilterBtn[0].classList.add("active");
+  }
+  
+  for (let i = 0; i < mobileFilterBtn.length; i++) {
+    mobileFilterBtn[i].addEventListener("click", function () {
+      let selectedValue = this.innerText.toLowerCase();
+      if (mobileSelectValue) {
+        mobileSelectValue.innerText = this.innerText;
+      }
+      filterFunc(selectedValue);
+
+      // Remove active from all buttons
+      mobileFilterBtn.forEach(btn => btn.classList.remove("active"));
+      // Add active to clicked button
+      this.classList.add("active");
+    });
+  }
 }
