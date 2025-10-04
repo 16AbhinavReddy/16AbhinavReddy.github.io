@@ -762,11 +762,12 @@ main {
 
 .clients-item img {
   width: 100%;
-  filter: grayscale(1);
   transition: var(--transition-1);
 }
 
-.clients-item img:hover { filter: grayscale(0); }
+.clients-item img:hover { 
+  transform: scale(1.05); /* Add a subtle hover effect instead of grayscale removal */
+}
 
 
 
@@ -819,7 +820,7 @@ main {
   top: -25px;
   left: -30px;
   width: 1px;
-  height: calc(100% + 50px);
+  height: calc(100% + 50px + 2em); /* Extend to include bullet points area */
   background: var(--jet);
 }
 
@@ -887,7 +888,7 @@ main {
 
 .timeline-item-header {
   display: flex;
-  align-items: center; /* vertically center logo and text */
+  align-items: flex-start; /* align logos with titles */
   gap: 15px;
 }
 
@@ -909,7 +910,7 @@ main {
 /* Bullet list nested inside each timeline item (Experience bullets) */
 .timeline-item > .timeline-list {
   position: relative;
-  /* Align under the text block, not the logo */
+  /* Align bullet points with logos for proper centering */
   margin-left: calc(60px + 15px); /* logo width + header gap */
   margin-top: 10px;
 }
@@ -918,19 +919,19 @@ main {
 .timeline-item > .timeline-list::before {
   content: "";
   position: absolute;
-  /* Start/end at bullet centers: (line-height - dot)/2 with line-height 1.25 and dot 6px */
+  /* Start at first bullet center and end at last bullet center */
   top: calc((1.25em - 6px) / 2);
-  bottom: calc((1.25em - 6px) / 2);
+  height: calc(100% - 1.25em); /* Height from first bullet to last bullet */
   left: -45px; /* pass through bullet centers: bullet left (-48) + half dot (3) */
   width: 1px;
   background: var(--jet);
 }
 
-/* Fine-tune bullet dot position to align exactly with the logo edge */
+/* Fine-tune bullet dot position to align with the logo top edge */
 .timeline-item > .timeline-list .timeline-item1::after {
-  /* Align dot center to logo center: -(gap + logo/2) - (dot/2) => -(15 + 30) - 3 = -48px */
+  /* Align dot with logo top: -(gap + logo/2) - (dot/2) => -(15 + 30) - 3 = -48px */
   top: calc((1.25em - 6px) / 2); /* center dot relative to 1.25 line-height and 6px dot */
-  left: -48px;
+  left: -48px; /* Position to align with 60px logo + 15px gap */
   box-shadow: 0 0 0 3px var(--jet);
 }
 
@@ -973,6 +974,43 @@ main {
   background: var(--text-gradient-yellow);
   height: 100%;
   border-radius: inherit;
+  position: relative;
+  overflow: hidden;
+  animation: fillProgress 2s ease-out forwards;
+}
+
+.skill-progress-fill::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes fillProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: var(--target-width, 100%);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 
@@ -980,8 +1018,73 @@ main {
 
 
 /*-----------------------------------*\
-  #PORTFOLIO
+  #HOBBIES
 \*-----------------------------------*/
+
+.hobbies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.hobby-card {
+  position: relative;
+  background: var(--border-gradient-onyx);
+  padding: 30px 25px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-2);
+  transition: var(--transition-2);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.hobby-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.hobby-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-4);
+}
+
+.hobby-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--text-gradient-yellow);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: var(--smoky-black);
+  transition: var(--transition-1);
+}
+
+.hobby-card:hover .hobby-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.hobby-title {
+  color: var(--white-2);
+  font-size: var(--fs-4);
+  font-weight: var(--fw-600);
+  margin-bottom: 15px;
+  text-transform: capitalize;
+}
+
+.hobby-description {
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-300);
+  line-height: 1.6;
+}
 
 .filter-list { display: none; }
 
@@ -1112,6 +1215,7 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center; /* Center the image content */
   transition: var(--transition-1);
 }
 
@@ -1400,7 +1504,9 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .project-img,
-  .blog-banner-box { height: auto; }
+  .blog-banner-box { 
+    height: 200px; /* Maintain consistent height for project images */
+  }
 
 }
 
@@ -1669,7 +1775,26 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-top: 20px;
   }
 
-  .timeline-item:not(:last-child)::before { left: -40px; }
+  /* Ensure bullet points align with logos in experiences section */
+  .timeline-item > .timeline-list {
+    margin-left: calc(40px + 15px); /* logo width + header gap for larger screens */
+  }
+
+  /* Adjust bullet point positioning for smaller logos on larger screens */
+  .timeline-item > .timeline-list .timeline-item1::after {
+    left: -38px; /* Position to align with 40px logo + 15px gap */
+  }
+
+  /* Adjust connector line for smaller logos on larger screens */
+  .timeline-item > .timeline-list::before {
+    left: -35px; /* pass through bullet centers: bullet left (-38) + half dot (3) */
+    height: calc(100% - 1.25em); /* Height from first bullet to last bullet */
+  }
+
+  .timeline-item:not(:last-child)::before { 
+    left: -40px; 
+    height: calc(100% + 50px + 2em); /* Extend to include bullet points area */
+  }
 
   .timeline-item::after {
     height: 8px;
@@ -1690,6 +1815,22 @@ textarea.form-input::-webkit-resizer { display: none; }
   .blog-posts-list { gap: 30px; }
 
   .blog-content { padding: 25px; }
+
+  /* Hobbies responsive */
+  .hobbies-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .hobby-card {
+    padding: 35px 30px;
+  }
+
+  .hobby-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 32px;
+  }
 
 
 
@@ -1933,6 +2074,22 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .blog-banner-box { height: 230px; }
 
+  /* Hobbies responsive for larger screens */
+  .hobbies-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+  }
+
+  .hobby-card {
+    padding: 40px 35px;
+  }
+
+  .hobby-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+  }
+
 }
 
 
@@ -2080,7 +2237,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
   .timeline-item-header {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-start; /* align logos with titles */
     gap: 15px;
   }
 
@@ -2096,15 +2253,18 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .timeline-item-content {
     flex: 1;
+    text-align: left; /* Ensure titles and descriptions are left-aligned */
   }
 
   .timeline-item-content .timeline-item-title {
     margin-bottom: 8px;
+    text-align: left; /* Left align titles */
   }
 
   .timeline-item-content span {
     display: block;
     margin-bottom: 10px;
+    text-align: left; /* Left align dates */
   }
 
 
