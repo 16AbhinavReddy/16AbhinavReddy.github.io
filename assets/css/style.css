@@ -2795,7 +2795,7 @@ textarea.form-input::-webkit-resizer { display: none; }
     line-height: 1.7 !important;
     margin-bottom: 12px !important;
     color: var(--light-gray) !important;
-    padding-left: 25px !important;
+    padding-left: 40px !important;
     position: relative !important;
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;
@@ -2809,11 +2809,28 @@ textarea.form-input::-webkit-resizer { display: none; }
     content: "▶" !important;
     color: var(--orange-yellow-crayola) !important;
     position: absolute !important;
-    left: 0 !important;
+    left: 15px !important;
     font-size: 12px !important;
     top: 3px !important;
     line-height: 1 !important;
     z-index: 1 !important;
+  }
+
+  /* Override the desktop rule that sets padding-left: 0 for mobile */
+  .timeline-item > .timeline-list .timeline-item1 {
+    padding-left: 0 !important;
+  }
+
+  /* Ensure timeline-text1 has proper spacing on mobile */
+  .timeline-item > .timeline-list .timeline-item1 .timeline-text1 {
+    padding-left: 40px !important;
+    margin-left: 0 !important;
+  }
+
+  /* Alternative approach - target all timeline-text1 in mobile */
+  .timeline-text1 {
+    padding-left: 60px !important;
+    margin-left: 0 !important;
   }
 
   /* Mobile skills section - clean organized design */
