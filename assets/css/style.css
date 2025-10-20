@@ -2833,6 +2833,30 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-left: 0 !important;
   }
 
+  /* Remove entire experience content from experiences section in mobile version */
+  .timeline-item > .timeline-list {
+    display: none !important;
+  }
+
+  /* Remove detailed content from Education, Position of Responsibilities, Achievements, and Presentations sections in mobile version */
+  .timeline-text {
+    display: none !important;
+  }
+
+  /* Remove collaborators and mentors fields from research experiences in mobile version */
+  .service-item:has(.service-item-title1) {
+    display: none !important;
+  }
+
+  /* Center the download CV button in mobile version */
+  .download-cv-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 20px 0 !important;
+  }
+
   /* Mobile skills section - clean organized design */
   .skill-list {
     gap: 20px;
